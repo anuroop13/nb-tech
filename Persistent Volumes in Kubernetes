@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-nautilus
+spec:
+  capacity:
+    storage: 7Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manual
+  hostPath:
+    path: /mnt/itadmin
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-nautilus
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manual
+  resources:
+    requests:
+      storage: 3Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nautilus
+spec:
+  volumes:
+    - name: storage-nautilus
+      persistentVolumeClaim:
+        claimName: pvc-nautilus
+  containers:
+    - name: container-nautilus
+      image: httpd:latest
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: storage-nautilus
+          mountPath:  /var/www/html
