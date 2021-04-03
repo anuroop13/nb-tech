@@ -36,7 +36,7 @@ spec:
             name: "redis-cluster-configmap"
             defaultMode: 0755
       containers:
-        - name: redis
+        - name: redis-container
           image: redis:5.0.1-alpine
           command: ["/conf/update-node.sh", "redis-server", "/conf/redis.conf"]
           env:
