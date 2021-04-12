@@ -42,3 +42,14 @@ spec:
   initContainers:
     - name: jekyll-init-datacenter
       image: kodekloud/jekyll
+      imagePullPolicy: IfNotPresent
+      command: ["jekyll", "new", "/site"]
+      volumeMounts:
+        - name: site
+          mountPath: /site
+  containers:
+    - name: jekyll-container-datacenter
+      image: kodekloud/jekyll-serve
+      volumeMounts:
+        - name: site
+          mountPath: /site
